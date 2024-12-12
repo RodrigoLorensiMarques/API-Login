@@ -26,36 +26,22 @@ namespace API_Login.Controller
         [HttpGet]
         public IActionResult Acesso(string nome, string senha)
         {
-            var NomeUsuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == nome).Select(x => x.NomeUsuario).SingleOrDefault();
+            var usuarioBanco = _context.Usuarios.SingleOrDefault(x => x.NomeUsuario == nome);
 
-
-            if (NomeUsuarioBanco != null)
+            if (usuarioBanco != null)
             {
-                var SenhaUsuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == nome).Select(x => x.SenhaUsuario).SingleOrDefault();
-
-                if (SenhaUsuarioBanco.ToString() == senha.ToString())
+                if (usuarioBanco.SenhaUsuario == senha)
                 {
                     return Ok("Acesso liberado");
                 }
 
-                else
-                {
-                    return Unauthorized("Senha incorreta");
-                }
+                return Unauthorized("Credenciais incorretas ou usuário não localizado");
             }
 
-            else{
-                return NotFound("Usuário não localizado");
+            else 
+            {
+                return NotFound("Credenciais incorretas ou usuário não localizado");
             }
-
-
-
         }
-
-
-
-
-
-
     }
 }
