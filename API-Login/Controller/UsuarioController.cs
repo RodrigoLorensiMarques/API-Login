@@ -36,12 +36,12 @@ namespace API_Login.Controller
                 {
                     return Ok("Acesso liberado");
                 }
-                return Unauthorized("Credenciais incorretas ou usuário não localizado");
+                return Unauthorized("Credenciais incorretas");
             }
 
             else 
             {
-                return NotFound("Credenciais incorretas ou usuário não localizado");
+                return NotFound("Credenciais incorretas");
             }
         }
         
