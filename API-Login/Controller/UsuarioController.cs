@@ -34,7 +34,6 @@ namespace API_Login.Controller
                 {
                     return Ok("Acesso liberado");
                 }
-
                 return Unauthorized("Credenciais incorretas ou usuário não localizado");
             }
 
@@ -43,5 +42,25 @@ namespace API_Login.Controller
                 return NotFound("Credenciais incorretas ou usuário não localizado");
             }
         }
+
+        [HttpPost]
+        public IActionResult Cadastrar (Usuario usuarioRecebido)
+        {
+            var usuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
+
+            if (usuarioBanco.IsNullOrEmpty())
+            {
+                _context.Usuarios.Add(usuarioRecebido);
+                _context.SaveChanges();
+                return Ok("Usuário cadastrado");
+            }
+
+            else
+            {
+                return BadRequest("Nome de usuário não disponível");
+            }
+        }
+
+
     }
 }
