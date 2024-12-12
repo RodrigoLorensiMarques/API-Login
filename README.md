@@ -1,6 +1,6 @@
 # API-Login
  
-API que realiza cadastro e login de usuários em uma database.
+API que realiza cadastro e login de usuários em uma database. \
 Realiza armazenamento das senhas em hash usando a bibliteca BCrypt.
 
 
