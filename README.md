@@ -7,7 +7,7 @@ Realiza armazenamento das senhas em hash usando a bibliteca BCrypt.
 ## Tecnologias
 - C# .NET
 - Entity Framework
-- SQLSever
+- SQL Server
 - BCrypt
 
 
