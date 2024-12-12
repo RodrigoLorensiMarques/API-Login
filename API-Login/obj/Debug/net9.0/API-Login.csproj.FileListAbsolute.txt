@@ -313,3 +313,4 @@ C:\Users\Rodrigo\Documents\GitHub\API-Login\API-Login\obj\Debug\net9.0\refint\AP
 C:\Users\Rodrigo\Documents\GitHub\API-Login\API-Login\obj\Debug\net9.0\API-Login.pdb
 C:\Users\Rodrigo\Documents\GitHub\API-Login\API-Login\obj\Debug\net9.0\API-Login.genruntimeconfig.cache
 C:\Users\Rodrigo\Documents\GitHub\API-Login\API-Login\obj\Debug\net9.0\ref\API-Login.dll
+C:\Users\Rodrigo\Documents\GitHub\API-Login\API-Login\bin\Debug\net9.0\BCrypt.Net-Next.dll

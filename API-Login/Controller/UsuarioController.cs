@@ -30,7 +30,9 @@ namespace API_Login.Controller
 
             if (usuarioBanco != null)
             {
-                if (usuarioBanco.SenhaUsuario == senha)
+                bool verified = BCrypt.Net.BCrypt.Verify(senha, usuarioBanco.SenhaUsuario);
+
+                if (verified == true)
                 {
                     return Ok("Acesso liberado");
                 }
@@ -42,6 +44,7 @@ namespace API_Login.Controller
                 return NotFound("Credenciais incorretas ou usuário não localizado");
             }
         }
+        
 
         [HttpPost]
         public IActionResult Cadastrar (Usuario usuarioRecebido)
@@ -50,6 +53,10 @@ namespace API_Login.Controller
 
             if (usuarioBanco.IsNullOrEmpty())
             {
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(usuarioRecebido.SenhaUsuario);
+
+                usuarioRecebido.SenhaUsuario = PasswordHash;
+
                 _context.Usuarios.Add(usuarioRecebido);
                 _context.SaveChanges();
                 return Ok("Usuário cadastrado");
@@ -60,7 +67,5 @@ namespace API_Login.Controller
                 return BadRequest("Nome de usuário não disponível");
             }
         }
-
-
     }
 }
