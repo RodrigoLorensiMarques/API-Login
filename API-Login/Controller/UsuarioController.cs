@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using API_Login.Context;
 using API_Login.Entities;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API_Login.Controller
 {
@@ -17,10 +17,12 @@ namespace API_Login.Controller
     public class UsuarioController : ControllerBase
     {
         private readonly LoginContext _context;
+        private readonly string _secretKey;
 
-        public UsuarioController(LoginContext context)
+        public UsuarioController(LoginContext context, IConfiguration configuration)
         {
             _context = context;
+            _secretKey = configuration.GetSection("JwtSettings:SecretKey").Value;
         }
 
         [HttpGet]
@@ -34,7 +36,8 @@ namespace API_Login.Controller
 
                 if (verified == true)
                 {
-                    return Ok("Acesso liberado");
+                    var token = GenerateJwtToken(usuarioBanco.NomeUsuario);
+                    return Ok(new {message="Acesso Liberado", token });
                 }
                 return Unauthorized("Credenciais incorretas");
             }
@@ -44,14 +47,18 @@ namespace API_Login.Controller
                 return NotFound("Credenciais incorretas");
             }
         }
-        
 
         [HttpPost]
-        public IActionResult Cadastrar (Usuario usuarioRecebido)
+        public IActionResult Cadastrar(Usuario usuarioRecebido)
         {
             var usuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
 
-            if (usuarioBanco.IsNullOrEmpty())
+            if (usuarioBanco.Any())
+            {
+                return BadRequest("Nome de usuário não disponível");
+            }
+
+            else
             {
                 string PasswordHash = BCrypt.Net.BCrypt.HashPassword(usuarioRecebido.SenhaUsuario);
 
@@ -61,11 +68,23 @@ namespace API_Login.Controller
                 _context.SaveChanges();
                 return Ok("Usuário cadastrado");
             }
+        }
 
-            else
+        private string GenerateJwtToken(string username)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_secretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                return BadRequest("Nome de usuário não disponível");
-            }
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, username)
+                }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }
