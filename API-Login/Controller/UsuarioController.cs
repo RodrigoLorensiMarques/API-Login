@@ -36,7 +36,7 @@ namespace API_Login.Controller
 
                 if (verified == true)
                 {
-                    var token = GenerateJwtToken(usuarioBanco.NomeUsuario);
+                    var token = GenerateJwtToken(usuarioBanco.NomeUsuario, usuarioBanco.id);
                     return Ok(new {message="Acesso Liberado", token });
                 }
                 return Unauthorized("Credenciais incorretas");
@@ -70,7 +70,7 @@ namespace API_Login.Controller
             }
         }
 
-        private string GenerateJwtToken(string username)
+        private string GenerateJwtToken(string username, int userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secretKey);
@@ -78,7 +78,8 @@ namespace API_Login.Controller
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim ("id",userId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
