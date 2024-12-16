@@ -29,6 +29,8 @@ namespace API_Login.Services
                     new Claim ("id",userId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
+                Issuer = "API-Login",
+                Audience = "App",
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

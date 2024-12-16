@@ -10,6 +10,7 @@ using API_Login.Context;
 using API_Login.Entities;
 using Microsoft.IdentityModel.Tokens;
 using API_Login.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_Login.Controller
 {
@@ -69,6 +70,14 @@ namespace API_Login.Controller
                 _context.SaveChanges();
                 return Ok("Usuário cadastrado");
             }
+        }
+
+        [Authorize]
+        [HttpGet("protected")]
+        public IActionResult Protected()
+        {
+            var username = User.Identity.Name;
+            return Ok($"Acesso permitido para {username}");
         }
 
 
