@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using API_Login.Context;
 using API_Login.Entities;
 using Microsoft.IdentityModel.Tokens;
+using API_Login.Services;
 
 namespace API_Login.Controller
 {
@@ -17,12 +18,12 @@ namespace API_Login.Controller
     public class UsuarioController : ControllerBase
     {
         private readonly LoginContext _context;
-        private readonly string _secretKey;
+        private readonly TokenService _tokenService;
 
-        public UsuarioController(LoginContext context, IConfiguration configuration)
+        public UsuarioController(LoginContext context, TokenService tokenService)
         {
             _context = context;
-            _secretKey = configuration.GetSection("JwtSettings:SecretKey").Value;
+            _tokenService = tokenService;
         }
 
         [HttpGet]
@@ -36,7 +37,7 @@ namespace API_Login.Controller
 
                 if (verified == true)
                 {
-                    var token = GenerateJwtToken(usuarioBanco.NomeUsuario, usuarioBanco.id);
+                    var token = _tokenService.GenerateJwtToken(usuarioBanco.NomeUsuario, usuarioBanco.id);
                     return Ok(new {message="Acesso Liberado", token });
                 }
                 return Unauthorized("Credenciais incorretas");
@@ -70,22 +71,6 @@ namespace API_Login.Controller
             }
         }
 
-        private string GenerateJwtToken(string username, int userId)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim ("id",userId.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
+
     }
 }
