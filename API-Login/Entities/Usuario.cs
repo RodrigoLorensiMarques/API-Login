@@ -13,5 +13,7 @@ namespace API_Login.Entities
         public string NomeUsuario { get; set; }
 
         public string SenhaUsuario { get; set; }
+
+        public string Role{ get; set; }
     }
 }

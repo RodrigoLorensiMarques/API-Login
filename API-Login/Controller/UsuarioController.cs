@@ -38,7 +38,7 @@ namespace API_Login.Controller
 
                 if (verified == true)
                 {
-                    var token = _tokenService.GenerateJwtToken(usuarioBanco.NomeUsuario, usuarioBanco.id);
+                    var token = _tokenService.GenerateJwtToken(usuarioBanco.NomeUsuario, usuarioBanco.id, usuarioBanco.Role);
                     return Ok(new {message="Acesso Liberado", token });
                 }
                 return Unauthorized("Credenciais incorretas");
@@ -50,7 +50,7 @@ namespace API_Login.Controller
             }
         }
 
-        [HttpPost]
+        [HttpPost("comum")]
         public IActionResult Cadastrar(Usuario usuarioRecebido)
         {
             var usuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
@@ -66,15 +66,50 @@ namespace API_Login.Controller
 
                 usuarioRecebido.SenhaUsuario = PasswordHash;
 
+                usuarioRecebido.Role = "Comum";
+
                 _context.Usuarios.Add(usuarioRecebido);
                 _context.SaveChanges();
                 return Ok("Usuário cadastrado");
             }
         }
 
+        [HttpPost("administrator")]
+        public IActionResult CadastrarAdmin(Usuario usuarioRecebido)
+        {
+            var usuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
+
+            if (usuarioBanco.Any())
+            {
+                return BadRequest("Nome de usuário não disponível");
+            }
+
+            else
+            {
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(usuarioRecebido.SenhaUsuario);
+
+                usuarioRecebido.SenhaUsuario = PasswordHash;
+
+                usuarioRecebido.Role = "Administrator";
+
+                _context.Usuarios.Add(usuarioRecebido);
+                _context.SaveChanges();
+                return Ok("Usuário cadastrado");
+            }
+        }
+
+
         [Authorize]
         [HttpGet("protected")]
         public IActionResult Protected()
+        {
+            var username = User.Identity.Name;
+            return Ok($"Acesso permitido para {username}");
+        }
+
+        [Authorize(Roles ="Administrator")]
+        [HttpGet("administrativo")]
+        public IActionResult Administrativo()
         {
             var username = User.Identity.Name;
             return Ok($"Acesso permitido para {username}");
