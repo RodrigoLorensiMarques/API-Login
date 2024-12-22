@@ -1,7 +1,7 @@
 # API-Login
  
 API que realiza cadastro e login de usuários em uma database. \
-Realiza armazenamento das senhas em hash e verifica a senha recebida no login com a hash armazenada, alem de retornar token JWT após verificação de credenciais.
+Realiza armazenamento das senhas em hash e verifica a senha recebida no login com a hash armazenada, alem de retornar token JWT após verificação de credenciais para uso em endpoints protegidos e com roles de autorização.
 
 
 ## Tecnologias
