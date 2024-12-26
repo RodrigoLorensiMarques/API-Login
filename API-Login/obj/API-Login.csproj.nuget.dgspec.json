@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-LOGIN\\API-Login.csproj": {}
+    "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-Login\\API-Login.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-LOGIN\\API-Login.csproj": {
+    "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-Login\\API-Login.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-LOGIN\\API-Login.csproj",
+        "projectUniqueName": "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-Login\\API-Login.csproj",
         "projectName": "API-Login",
-        "projectPath": "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-LOGIN\\API-Login.csproj",
+        "projectPath": "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-Login\\API-Login.csproj",
         "packagesPath": "C:\\Users\\Rodrigo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-LOGIN\\obj\\",
+        "outputPath": "C:\\Users\\Rodrigo\\Documents\\GitHub\\API-Login\\API-Login\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Rodrigo\\AppData\\Roaming\\NuGet\\NuGet.Config"
