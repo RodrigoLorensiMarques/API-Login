@@ -13,12 +13,11 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 - Docker
 
 ## Como Rodar:
-1. Necessário ter instalado __Docker__
 
-2. Em seu terminal, acesse a pasta raiz __API-Login__
+1. Em seu terminal, acesse a pasta raiz __API-Login__
 
-3. Para subir os serviços `docker-compose up` 
+2. Para subir os serviços `docker-compose up` 
 
-5. Aplique as migrations `dotnet-ef database update`
+3. Aplique as migrations `dotnet-ef database update`
    
 __OBS.:__ O projeto esta usando Swagger para testes. Então você pode acessar o seu http://localhost:5200/swagger para ter acesso a interface do Swagger.
