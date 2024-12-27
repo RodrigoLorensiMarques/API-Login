@@ -23,4 +23,5 @@ RUN dotnet publish "API-Login.csproj" -c $configuration -o /app/publish /p:UseAp
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY API-Login/appsettings.Development.json .
 ENTRYPOINT ["dotnet", "API-Login.dll"]
