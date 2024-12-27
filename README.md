@@ -12,6 +12,10 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 - JwtBearer
 - Docker
 
+## Requisitos:
+1. [Docker](https://docs.docker.com/engine/install/)
+2. [.NET 9](https://dotnet.microsoft.com/pt-br/download)
+
 ## Como Rodar:
 
 1. Em seu terminal, acesse a pasta raiz __API-Login__
