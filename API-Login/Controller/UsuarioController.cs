@@ -11,6 +11,7 @@ using API_Login.Entities;
 using Microsoft.IdentityModel.Tokens;
 using API_Login.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_Login.Controller
 {
@@ -30,7 +31,7 @@ namespace API_Login.Controller
         [HttpGet]
         public IActionResult Acesso(string nome, string senha)
         {
-            var usuarioBanco = _context.Usuarios.SingleOrDefault(x => x.NomeUsuario == nome);
+            var usuarioBanco = _context.Usuarios.AsNoTracking().SingleOrDefault(x => x.NomeUsuario == nome);
 
             if (usuarioBanco != null)
             {
@@ -53,7 +54,7 @@ namespace API_Login.Controller
         [HttpPost("comum")]
         public IActionResult Cadastrar(Usuario usuarioRecebido)
         {
-            var usuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
+            var usuarioBanco = _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
 
             if (usuarioBanco.Any())
             {
@@ -77,7 +78,7 @@ namespace API_Login.Controller
         [HttpPost("administrator")]
         public IActionResult CadastrarAdmin(Usuario usuarioRecebido)
         {
-            var usuarioBanco = _context.Usuarios.Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
+            var usuarioBanco = _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
 
             if (usuarioBanco.Any())
             {
