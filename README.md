@@ -10,18 +10,18 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 - SQL Server
 - BCrypt
 - JwtBearer
+- Docker
+
+## Requisitos:
+1. [Docker](https://docs.docker.com/engine/install/)
+2. [.NET 9](https://dotnet.microsoft.com/pt-br/download)
 
 ## Como Rodar:
-1. Necessário ter instalado o __.Net 9.0__
 
-2. Em seu terminal, acesse a pasta raiz __API-Login__
+1. Em seu terminal, acesse a pasta raiz __API-Login__
 
-3. Use o comando `dotnet restore` para instalar todas as dependências que estão no __API-Login.csproj__
+2. Para subir os serviços `docker-compose up` 
 
-4. Na raiz do projeto, edite o __"ConnectionStrings"__ do arquivo __appsettings.Development.json__ para o seu banco SQL Server ou configure o banco de sua preferência.
-
-5. Após configuração do banco, aplique as migrations usando o comando `dotnet-ef database update`
-
-6. Execute o comando `dotnet run`
+3. Aplique as migrations `dotnet-ef database update`
    
-OBS.: O projeto esta usando Swagger para testes. Então você pode acessar o seu http://localhost:{porta}/swagger para ter acesso a interface do Swagger.
+__OBS.:__ O projeto esta usando Swagger para testes. Então você pode acessar o seu http://localhost:5200/swagger para ter acesso a interface do Swagger.
