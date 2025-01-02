@@ -29,9 +29,9 @@ namespace API_Login.Controller
         }
 
         [HttpGet]
-        public IActionResult Acesso(string nome, string senha)
+        public async Task<IActionResult> Acesso(string nome, string senha)
         {
-            var usuarioBanco = _context.Usuarios.AsNoTracking().SingleOrDefault(x => x.NomeUsuario == nome);
+            var usuarioBanco = await _context.Usuarios.AsNoTracking().SingleOrDefaultAsync(x => x.NomeUsuario == nome);
 
             if (usuarioBanco != null)
             {
@@ -52,9 +52,9 @@ namespace API_Login.Controller
         }
 
         [HttpPost("comum")]
-        public IActionResult Cadastrar(Usuario usuarioRecebido)
+        public async Task<IActionResult> Cadastrar(Usuario usuarioRecebido)
         {
-            var usuarioBanco = _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
+            var usuarioBanco = await _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario).ToListAsync();
 
             if (usuarioBanco.Any())
             {
@@ -70,15 +70,15 @@ namespace API_Login.Controller
                 usuarioRecebido.Role = "Comum";
 
                 _context.Usuarios.Add(usuarioRecebido);
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
                 return Ok("Usuário cadastrado");
             }
         }
 
         [HttpPost("administrator")]
-        public IActionResult CadastrarAdmin(Usuario usuarioRecebido)
+        public async Task<IActionResult> CadastrarAdmin(Usuario usuarioRecebido)
         {
-            var usuarioBanco = _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario);
+            var usuarioBanco = await _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario).ToListAsync();
 
             if (usuarioBanco.Any())
             {
@@ -94,7 +94,7 @@ namespace API_Login.Controller
                 usuarioRecebido.Role = "Administrator";
 
                 _context.Usuarios.Add(usuarioRecebido);
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
                 return Ok("Usuário cadastrado");
             }
         }
