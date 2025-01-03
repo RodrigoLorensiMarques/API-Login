@@ -29,17 +29,17 @@ namespace API_Login.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> Acesso(string nome, string senha)
+        public async Task<IActionResult> Acess(string name, string password)
         {
-            var usuarioBanco = await _context.Usuarios.AsNoTracking().SingleOrDefaultAsync(x => x.NomeUsuario == nome);
+            var userDatabase = await _context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.UserName == name);
 
-            if (usuarioBanco != null)
+            if (userDatabase != null)
             {
-                bool verified = BCrypt.Net.BCrypt.Verify(senha, usuarioBanco.SenhaUsuario);
+                bool verified = BCrypt.Net.BCrypt.Verify(password, userDatabase.UserPassword);
 
                 if (verified == true)
                 {
-                    var token = _tokenService.GenerateJwtToken(usuarioBanco.NomeUsuario, usuarioBanco.id, usuarioBanco.Role);
+                    var token = _tokenService.GenerateJwtToken(userDatabase.UserName, userDatabase.id, userDatabase.Role);
                     return Ok(new {message="Acesso Liberado", token });
                 }
                 return Unauthorized("Credenciais incorretas");
@@ -52,48 +52,48 @@ namespace API_Login.Controller
         }
 
         [HttpPost("comum")]
-        public async Task<IActionResult> Cadastrar(Usuario usuarioRecebido)
+        public async Task<IActionResult> Register(User newUser)
         {
-            var usuarioBanco = await _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario).ToListAsync();
+            var userDatabase = await _context.Users.AsNoTracking().Where(x => x.UserName == newUser.UserName).ToListAsync();
 
-            if (usuarioBanco.Any())
+            if (userDatabase.Any())
             {
                 return BadRequest("Nome de usuário não disponível");
             }
 
             else
             {
-                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(usuarioRecebido.SenhaUsuario);
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.UserPassword);
 
-                usuarioRecebido.SenhaUsuario = PasswordHash;
+                newUser.UserPassword = PasswordHash;
 
-                usuarioRecebido.Role = "Comum";
+                newUser.Role = "Comum";
 
-                _context.Usuarios.Add(usuarioRecebido);
+                _context.Users.Add(newUser);
                 _context.SaveChangesAsync();
                 return Ok("Usuário cadastrado");
             }
         }
 
         [HttpPost("administrator")]
-        public async Task<IActionResult> CadastrarAdmin(Usuario usuarioRecebido)
+        public async Task<IActionResult> CreateUserAdmin(User newUserAdmin)
         {
-            var usuarioBanco = await _context.Usuarios.AsNoTracking().Where(x => x.NomeUsuario == usuarioRecebido.NomeUsuario).ToListAsync();
+            var userDatabase = await _context.Users.AsNoTracking().Where(x => x.UserName == newUserAdmin.UserName).ToListAsync();
 
-            if (usuarioBanco.Any())
+            if (userDatabase.Any())
             {
                 return BadRequest("Nome de usuário não disponível");
             }
 
             else
             {
-                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(usuarioRecebido.SenhaUsuario);
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUserAdmin.UserPassword);
 
-                usuarioRecebido.SenhaUsuario = PasswordHash;
+                newUserAdmin.UserPassword = PasswordHash;
 
-                usuarioRecebido.Role = "Administrator";
+                newUserAdmin.Role = "Administrator";
 
-                _context.Usuarios.Add(usuarioRecebido);
+                _context.Users.Add(newUserAdmin);
                 _context.SaveChangesAsync();
                 return Ok("Usuário cadastrado");
             }
@@ -104,16 +104,16 @@ namespace API_Login.Controller
         [HttpGet("protected")]
         public IActionResult Protected()
         {
-            var username = User.Identity.Name;
-            return Ok($"Acesso permitido para {username}");
+            var userName = User.Identity.Name;
+            return Ok($"Acesso permitido para {userName}");
         }
 
         [Authorize(Roles ="Administrator")]
         [HttpGet("administrativo")]
         public IActionResult Administrativo()
         {
-            var username = User.Identity.Name;
-            return Ok($"Acesso permitido para {username}");
+            var userName = User.Identity.Name;
+            return Ok($"Acesso permitido para {userName}");
         }
 
 

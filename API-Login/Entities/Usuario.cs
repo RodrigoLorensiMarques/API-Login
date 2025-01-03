@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace API_Login.Entities
 {
-    public class Usuario
+    public class User
     {
 
         public int id { get; set; }
         
-        public string NomeUsuario { get; set; }
+        public string UserName { get; set; }
 
-        public string SenhaUsuario { get; set; }
+        public string UserPassword { get; set; }
 
         public string Role{ get; set; }
     }

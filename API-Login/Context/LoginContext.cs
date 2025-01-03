@@ -15,6 +15,6 @@ namespace API_Login.Context
         }
 
 
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
