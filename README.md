@@ -12,16 +12,19 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 - JwtBearer
 - Docker
 
-## Requisitos:
-1. [Docker](https://docs.docker.com/engine/install/)
-2. [.NET 9](https://dotnet.microsoft.com/pt-br/download)
+## Como Rodar
+### Requisitos:
+1. [.NET 9](https://dotnet.microsoft.com/pt-br/download)
+2. [Docker](https://docs.docker.com/engine/install/) 
 
-## Como Rodar:
+### Passo a Passo:
 
-1. Em seu terminal, acesse a pasta raiz __API-Login__
+1. Em seu terminal, acesse a pasta raiz do repositório
 
-2. Para subir os serviços `docker-compose up` 
+2. Para subir os serviços use `docker-compose up` 
 
-3. Aplique as migrations `dotnet-ef database update`
+3. Dentro do diretório do projeto, restaure os pacotes usando `dotnet restore`
+
+4. Aplique as migrations usando `dotnet-ef database update`
    
-__OBS.:__ O projeto esta usando Swagger para testes. Então você pode acessar o seu http://localhost:5200/swagger para ter acesso a interface do Swagger.
+__OBS.:__ O projeto esta usando Swagger para testes. Então você pode acessar o http://localhost:5200/swagger para ter acesso a interface do Swagger.
