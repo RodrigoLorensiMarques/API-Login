@@ -58,7 +58,7 @@ namespace API_Login.Controller
         }
 
         [HttpPost("customer")]
-        public async Task<IActionResult> Register(User newUser)
+        public async Task<IActionResult> CreateUserCustomer(User newUser)
         {
             try
             {
@@ -76,6 +76,8 @@ namespace API_Login.Controller
                     newUser.Password = PasswordHash;
 
                     newUser.Role = "customer";
+
+                    newUser.CreateDate = DateTime.UtcNow;
 
                     _context.Users.Add(newUser);
                     _context.SaveChangesAsync();
@@ -108,6 +110,8 @@ namespace API_Login.Controller
                     newUserAdmin.Password = PasswordHash;
 
                     newUserAdmin.Role = "administrator";
+
+                    newUserAdmin.CreateDate = DateTime.UtcNow;
 
                     _context.Users.Add(newUserAdmin);
                     _context.SaveChangesAsync();
