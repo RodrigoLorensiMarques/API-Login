@@ -12,6 +12,18 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 - JwtBearer
 - Docker
 
+
+## API Endpoints
+### Material
+- __GET /User:__ Loga em um usuário com name e senha.
+- __POST /User/Custumer:__ Cria um novo usuário com role cliente.
+- __POST /User/administrator:__ Cria um novo usuário com role de admin.
+- __GET /User/administrator:__ Autoriza via Token apenas acesso de usuários admin.
+- __GET /User/protected:__ Autoriza qualquer usuário via Token.
+
+## Tabelas
+![DbDiagram](https://github.com/RodrigoLorensiMarques/API-Login/blob/main/DbDiagrama.png)
+
 ## Como Rodar
 ### Requisitos:
 1. [.NET 9](https://dotnet.microsoft.com/pt-br/download)
