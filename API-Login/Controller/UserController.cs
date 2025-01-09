@@ -69,20 +69,25 @@ namespace API_Login.Controller
                     return BadRequest("Nome de usuário não disponível");
                 }
 
-                else
+                int CountCharPassword = newUser.Password.Count();
+
+                if(CountCharPassword < 6)
                 {
-                    string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
-
-                    newUser.Password = PasswordHash;
-
-                    newUser.Role = "customer";
-
-                    newUser.CreateDate = DateTime.UtcNow;
-
-                    _context.Users.Add(newUser);
-                    await _context.SaveChangesAsync();
-                    return Ok("Usuário cadastrado com sucesso!");
+                    return BadRequest("Senha deve possuir pelo menos 6 caracteres");
                 }
+
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+
+                newUser.Password = PasswordHash;
+
+                newUser.Role = "customer";
+
+                newUser.CreateDate = DateTime.UtcNow;
+
+                _context.Users.Add(newUser);
+                await _context.SaveChangesAsync();
+                return Ok("Usuário cadastrado com sucesso!");
+            
             }
             catch (Exception)
             {
@@ -103,20 +108,24 @@ namespace API_Login.Controller
                     return BadRequest("Nome de usuário não disponível");
                 }
 
-                else
+                int CountCharPassword = newUserAdmin.Password.Count();
+
+                if(CountCharPassword < 6)
                 {
-                    string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUserAdmin.Password);
+                    return BadRequest("Senha deve possuir pelo menos 6 caracteres");
+                }
+                
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUserAdmin.Password);
 
-                    newUserAdmin.Password = PasswordHash;
+                newUserAdmin.Password = PasswordHash;
 
-                    newUserAdmin.Role = "administrator";
+                newUserAdmin.Role = "administrator";
 
-                    newUserAdmin.CreateDate = DateTime.UtcNow;
+                newUserAdmin.CreateDate = DateTime.UtcNow;
 
-                    _context.Users.Add(newUserAdmin);
-                    await _context.SaveChangesAsync();
-                    return Ok("Usuário cadastrado com sucesso!");
-                    }
+                _context.Users.Add(newUserAdmin);
+                await _context.SaveChangesAsync();
+                return Ok("Usuário cadastrado com sucesso!");      
             }
             catch (Exception)
             {
