@@ -5,24 +5,18 @@
 namespace API_Login.Migrations
 {
     /// <inheritdoc />
-    public partial class v3 : Migration
+    public partial class refactRoleProperty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Rule",
-                table: "Usuarios",
-                newName: "Role");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "Role",
-                table: "Usuarios",
-                newName: "Rule");
+
         }
     }
 }

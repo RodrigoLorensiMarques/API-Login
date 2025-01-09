@@ -5,7 +5,7 @@
 namespace API_Login.Migrations
 {
     /// <inheritdoc />
-    public partial class refactorProperties : Migration
+    public partial class refactMappingsV2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

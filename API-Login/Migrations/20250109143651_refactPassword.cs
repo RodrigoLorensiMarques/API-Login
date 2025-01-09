@@ -5,25 +5,24 @@
 namespace API_Login.Migrations
 {
     /// <inheritdoc />
-    public partial class v2 : Migration
+    public partial class refactPassword : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Rule",
-                table: "Usuarios",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.RenameColumn(
+                name: "Password",
+                table: "users",
+                newName: "password");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Rule",
-                table: "Usuarios");
+            migrationBuilder.RenameColumn(
+                name: "password",
+                table: "users",
+                newName: "Password");
         }
     }
 }

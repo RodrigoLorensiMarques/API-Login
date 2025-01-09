@@ -41,7 +41,7 @@ namespace API_Login.Controller
 
                     if (verified == true)
                     {
-                        var token = _tokenService.GenerateJwtToken(userDatabase.Name, userDatabase.id, userDatabase.Role);
+                        var token = _tokenService.GenerateJwtToken(userDatabase.Name, userDatabase.Id, userDatabase.Role);
                         return Ok(new {message="Acesso Liberado", token });
                     }
                     return Unauthorized("Credenciais incorretas");
