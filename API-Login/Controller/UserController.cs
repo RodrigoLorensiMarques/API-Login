@@ -17,12 +17,12 @@ namespace API_Login.Controller
 {
     [ApiController]
     [Route("[controller]")]
-    public class UsuarioController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly LoginContext _context;
         private readonly TokenService _tokenService;
 
-        public UsuarioController(LoginContext context, TokenService tokenService)
+        public UserController(LoginContext context, TokenService tokenService)
         {
             _context = context;
             _tokenService = tokenService;
@@ -33,15 +33,15 @@ namespace API_Login.Controller
         {
             try
             {
-                var userDatabase = await _context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.UserName == name);
+                var userDatabase = await _context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.Name == name);
 
                 if (userDatabase != null)
                 {
-                    bool verified = BCrypt.Net.BCrypt.Verify(password, userDatabase.UserPassword);
+                    bool verified = BCrypt.Net.BCrypt.Verify(password, userDatabase.Password);
 
                     if (verified == true)
                     {
-                        var token = _tokenService.GenerateJwtToken(userDatabase.UserName, userDatabase.id, userDatabase.Role);
+                        var token = _tokenService.GenerateJwtToken(userDatabase.Name, userDatabase.id, userDatabase.Role);
                         return Ok(new {message="Acesso Liberado", token });
                     }
                     return Unauthorized("Credenciais incorretas");
@@ -57,12 +57,12 @@ namespace API_Login.Controller
             }
         }
 
-        [HttpPost("comum")]
+        [HttpPost("customer")]
         public async Task<IActionResult> Register(User newUser)
         {
             try
             {
-                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.UserName == newUser.UserName).ToListAsync();
+                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.Name == newUser.Name).ToListAsync();
 
                 if (userDatabase.Any())
                 {
@@ -71,11 +71,11 @@ namespace API_Login.Controller
 
                 else
                 {
-                    string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.UserPassword);
+                    string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
 
-                    newUser.UserPassword = PasswordHash;
+                    newUser.Password = PasswordHash;
 
-                    newUser.Role = "Comum";
+                    newUser.Role = "customer";
 
                     _context.Users.Add(newUser);
                     _context.SaveChangesAsync();
@@ -94,7 +94,7 @@ namespace API_Login.Controller
         {
             try
             {
-                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.UserName == newUserAdmin.UserName).ToListAsync();
+                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.Name == newUserAdmin.Name).ToListAsync();
 
                 if (userDatabase.Any())
                 {
@@ -103,11 +103,11 @@ namespace API_Login.Controller
 
                 else
                 {
-                    string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUserAdmin.UserPassword);
+                    string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUserAdmin.Password);
 
-                    newUserAdmin.UserPassword = PasswordHash;
+                    newUserAdmin.Password = PasswordHash;
 
-                    newUserAdmin.Role = "Administrator";
+                    newUserAdmin.Role = "administrator";
 
                     _context.Users.Add(newUserAdmin);
                     _context.SaveChangesAsync();
@@ -136,9 +136,9 @@ namespace API_Login.Controller
             }
         }
 
-        [Authorize(Roles ="Administrator")]
-        [HttpGet("administrativo")]
-        public IActionResult Administrativo()
+        [Authorize(Roles ="administrator")]
+        [HttpGet("administrator")]
+        public IActionResult Administrator()
         {
             try
             {
