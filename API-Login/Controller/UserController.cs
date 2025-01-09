@@ -80,8 +80,8 @@ namespace API_Login.Controller
                     newUser.CreateDate = DateTime.UtcNow;
 
                     _context.Users.Add(newUser);
-                    _context.SaveChangesAsync();
-                    return Ok("Usuário cadastrado");
+                    await _context.SaveChangesAsync();
+                    return Ok("Usuário cadastrado com sucesso!");
                 }
             }
             catch (Exception)
@@ -114,8 +114,8 @@ namespace API_Login.Controller
                     newUserAdmin.CreateDate = DateTime.UtcNow;
 
                     _context.Users.Add(newUserAdmin);
-                    _context.SaveChangesAsync();
-                    return Ok("Usuário cadastrado");
+                    await _context.SaveChangesAsync();
+                    return Ok("Usuário cadastrado com sucesso!");
                     }
             }
             catch (Exception)
