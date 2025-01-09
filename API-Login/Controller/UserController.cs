@@ -44,11 +44,11 @@ namespace API_Login.Controller
                         var token = _tokenService.GenerateJwtToken(userDatabase.Name, userDatabase.Id, userDatabase.Role);
                         return Ok(new {message="Acesso Liberado", token });
                     }
-                    return Unauthorized("Credenciais incorretas");
+                    return BadRequest("Credenciais incorretas ou usuário não existe");
                 }
                 else 
                 {
-                    return NotFound("Credenciais incorretas");
+                    return BadRequest("Credenciais incorretas ou usuário não existe");
                 }
             }
             catch (Exception)
