@@ -14,12 +14,15 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 
 
 ## API Endpoints
-### Material
+### User
 - __GET /User:__ Loga em um usuário com name e senha.
 - __POST /User/Custumer:__ Cria um novo usuário com role cliente.
 - __POST /User/administrator:__ Cria um novo usuário com role de admin.
 - __GET /User/administrator:__ Autoriza via Token apenas acesso de usuários admin.
 - __GET /User/protected:__ Autoriza qualquer usuário via Token.
+
+### Recovery
+- __PUT /Recovery/ChangePassword:__ Permite usuários autorizados alterar senha.
 
 ## Tabelas
 ![DbDiagram](https://github.com/RodrigoLorensiMarques/API-Login/blob/main/DbDiagrama.png)
