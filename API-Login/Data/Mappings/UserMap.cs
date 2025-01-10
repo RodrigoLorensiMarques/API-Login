@@ -47,6 +47,13 @@ namespace API_Login.Data.Mappings
             .HasColumnName("create_date")
             .IsRequired()
             .HasColumnType("DATETIME2");
+
+
+            builder.Property(x => x.Email)
+            .HasColumnName("email")
+            .IsRequired()
+            .HasColumnType("VARCHAR")
+            .HasMaxLength(50);
         }
     }
 }
