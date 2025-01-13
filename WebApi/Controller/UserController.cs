@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using WebApi.DTOs;
 
 namespace WebApi.Controller
 {
@@ -58,30 +59,33 @@ namespace WebApi.Controller
         }
 
         [HttpPost("customer")]
-        public async Task<IActionResult> CreateUserCustomer(User newUser)
+        public async Task<IActionResult> CreateUserCustomer(CreateUserDTO input)
         {
             try
             {
-                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.Name == newUser.Name).ToListAsync();
+                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.Name == input.Name).ToListAsync();
 
                 if (userDatabase.Any())
                 {
                     return BadRequest("Nome de usuário não disponível");
                 }
 
-                int CountCharPassword = newUser.Password.Count();
+                int CountCharPassword = input.Password.Count();
 
                 if(CountCharPassword < 6)
                 {
                     return BadRequest("Senha deve possuir pelo menos 6 caracteres");
                 }
 
-                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(input.Password);
 
+                User newUser = new User();
+                newUser.Name = input.Name;
+                newUser.FirstName = input.FirstName;
+                newUser.LastName = input.LastName;
+                newUser.Email = input.Email;
                 newUser.Password = PasswordHash;
-
                 newUser.Role = "customer";
-
                 newUser.CreateDate = DateTime.UtcNow;
 
                 _context.Users.Add(newUser);
@@ -97,35 +101,38 @@ namespace WebApi.Controller
 
 
         [HttpPost("administrator")]
-        public async Task<IActionResult> CreateUserAdmin(User newUserAdmin)
+        public async Task<IActionResult> CreateUserAdmin(CreateUserDTO input)
         {
             try
             {
-                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.Name == newUserAdmin.Name).ToListAsync();
+                var userDatabase = await _context.Users.AsNoTracking().Where(x => x.Name == input.Name).ToListAsync();
 
                 if (userDatabase.Any())
                 {
                     return BadRequest("Nome de usuário não disponível");
                 }
 
-                int CountCharPassword = newUserAdmin.Password.Count();
+                int CountCharPassword = input.Password.Count();
 
                 if(CountCharPassword < 6)
                 {
                     return BadRequest("Senha deve possuir pelo menos 6 caracteres");
                 }
                 
-                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUserAdmin.Password);
+                string PasswordHash = BCrypt.Net.BCrypt.HashPassword(input.Password);
 
+                User newUserAdmin = new User();
+                newUserAdmin.Name = input.Name;
+                newUserAdmin.FirstName = input.FirstName;
+                newUserAdmin.LastName = input.LastName;
+                newUserAdmin.Email = input.Email;
                 newUserAdmin.Password = PasswordHash;
-
                 newUserAdmin.Role = "administrator";
-
                 newUserAdmin.CreateDate = DateTime.UtcNow;
 
                 _context.Users.Add(newUserAdmin);
                 await _context.SaveChangesAsync();
-                return Ok("Usuário cadastrado com sucesso!");      
+                return Ok("Usuário cadastrado com sucesso!");  
             }
             catch (Exception)
             {
