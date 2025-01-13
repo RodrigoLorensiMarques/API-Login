@@ -6,7 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Context;
+using WebApi.Data.Context;
 using WebApi.Entities;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Services;
@@ -19,10 +19,10 @@ namespace WebApi.Controller
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly LoginContext _context;
+        private readonly AppDbContext _context;
         private readonly TokenService _tokenService;
 
-        public UserController(LoginContext context, TokenService tokenService)
+        public UserController(AppDbContext context, TokenService tokenService)
         {
             _context = context;
             _tokenService = tokenService;

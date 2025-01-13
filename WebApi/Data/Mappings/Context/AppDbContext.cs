@@ -6,11 +6,11 @@ using WebApi.Data.Mappings;
 using WebApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApi.Context
+namespace WebApi.Data.Context
 {
-    public class LoginContext :DbContext
+    public class AppDbContext :DbContext
     {
-        public LoginContext(DbContextOptions<LoginContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             
         }

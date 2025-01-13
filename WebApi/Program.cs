@@ -1,5 +1,5 @@
 
-using WebApi.Context;
+using WebApi.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddDbContext<LoginContext>(options => 
+builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
 

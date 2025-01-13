@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApi.Context;
+using WebApi.Data.Context;
 
 #nullable disable
 
 namespace WebApi.Migrations
 {
-    [DbContext(typeof(LoginContext))]
-    partial class LoginContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

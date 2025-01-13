@@ -13,7 +13,7 @@ services:
       - app-network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__ConexaoPadrao=Server=mssql;Database=Logins;User Id=sa;Password=Password123!;Encrypt=False
+      - ConnectionStrings__ConexaoPadrao=Server=mssql;Database=Accounts;User Id=sa;Password=Password123!;Encrypt=False
 
   mssqldata:
     image: mcr.microsoft.com/mssql/server:2022-latest

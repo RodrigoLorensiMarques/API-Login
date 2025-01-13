@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.Context;
+using WebApi.Data.Context;
 using WebApi.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +15,8 @@ namespace WebApi.Controller
     [Route("[controller]")]
     public class RecoveryController : ControllerBase
     {
-        public readonly LoginContext _context;
-        public RecoveryController (LoginContext context)
+        public readonly AppDbContext _context;
+        public RecoveryController (AppDbContext context)
         {
             _context = context;
         }

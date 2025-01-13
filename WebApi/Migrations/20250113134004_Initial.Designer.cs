@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApi.Context;
+using WebApi.Data.Context;
 
 #nullable disable
 
 namespace WebApi.Migrations
 {
-    [DbContext(typeof(LoginContext))]
-    [Migration("20250113132643_Initial")]
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20250113134004_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
