@@ -1,6 +1,6 @@
 # API-Login
  
-API que realiza cadastro e login de usuários em uma database. \
+API que realiza cadastro e gerenciamento de acessos de usuários. \
 Realiza armazenamento das senhas em hash e verifica a senha recebida no login com a hash armazenada, alem de retornar token JWT após verificação de credenciais para uso em endpoints protegidos e com roles de autorização.
 
 
@@ -15,7 +15,7 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 
 ## API Endpoints
 ### User
-- __GET /User:__ Loga em um usuário com name e senha.
+- __GET /User:__ Acessa um usuário com nome e senha.
 - __POST /User/Custumer:__ Cria um novo usuário com role cliente.
 - __POST /User/administrator:__ Cria um novo usuário com role de admin.
 - __GET /User/administrator:__ Autoriza via Token apenas acesso de usuários admin.
@@ -38,7 +38,7 @@ Realiza armazenamento das senhas em hash e verifica a senha recebida no login co
 
 2. Para subir os serviços use `docker-compose up` 
 
-3. Dentro do diretório do projeto, restaure os pacotes usando `dotnet restore`
+3. Dentro da pasta WebApi, restaure os pacotes usando `dotnet restore`
 
 4. Aplique as migrations usando `dotnet-ef database update`
    
