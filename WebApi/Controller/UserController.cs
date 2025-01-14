@@ -29,7 +29,7 @@ namespace WebApi.Controller
             _tokenService = tokenService;
         }
 
-        [HttpGet]
+        [HttpPost("login")]
         public async Task<IActionResult> Acess(AcessUserDTO input)
         {
             try
