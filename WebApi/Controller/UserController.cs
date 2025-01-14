@@ -30,15 +30,15 @@ namespace WebApi.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> Acess(string name, string password)
+        public async Task<IActionResult> Acess(AcessUserDTO input)
         {
             try
             {
-                var userDatabase = await _context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.Name == name);
+                var userDatabase = await _context.Users.AsNoTracking().SingleOrDefaultAsync(x => x.Name == input.Name);
 
                 if (userDatabase != null)
                 {
-                    bool verified = BCrypt.Net.BCrypt.Verify(password, userDatabase.Password);
+                    bool verified = BCrypt.Net.BCrypt.Verify(input.Password, userDatabase.Password);
 
                     if (verified == true)
                     {

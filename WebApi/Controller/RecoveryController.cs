@@ -7,6 +7,7 @@ using WebApi.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApi.DTOs;
 
 namespace WebApi.Controller
 {
@@ -21,14 +22,13 @@ namespace WebApi.Controller
             _context = context;
         }
 
-
         [Authorize]
         [HttpPut("ChangePassword")]
-        public async Task<IActionResult> ChangePassword(string currentPassword, string newPassword)
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO input)
         {
             try
             {
-                int CountCharPassword = newPassword.Count();
+                int CountCharPassword = input.NewPassword.Count();
                 if (CountCharPassword <6)
                 {
                     return BadRequest("Senha deve possuir pelo menos 6 caracteres");
@@ -37,14 +37,14 @@ namespace WebApi.Controller
                 var userName = User.Identity.Name;
                 var userDatabase = await _context.Users.FirstOrDefaultAsync(x => x.Name == userName);
 
-                bool verified = BCrypt.Net.BCrypt.Verify(currentPassword, userDatabase.Password);
+                bool verified = BCrypt.Net.BCrypt.Verify(input.CurrentPassword, userDatabase.Password);
 
                 if (verified != true)
                 {
                     return BadRequest($"A senha informada é diferente da senha atual");
                 }
 
-                var passwordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+                var passwordHash = BCrypt.Net.BCrypt.HashPassword(input.NewPassword);
                 userDatabase.Password = passwordHash;
 
                 _context.Users.Update(userDatabase);
