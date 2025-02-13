@@ -17,7 +17,7 @@ namespace WebApi.Services
             _secretKey = configuration.GetSection("JwtSettings:SecretKey").Value;
         }
 
-        public string GenerateJwtToken(string username, int userId, string Rule)
+        public string GenerateJwtToken(string username, int userId, string Rule, string firstName)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secretKey);
@@ -27,6 +27,7 @@ namespace WebApi.Services
                 {
                     new Claim(ClaimTypes.Name, username),
                     new Claim ("id",userId.ToString()),
+                    new Claim ("first_name", firstName),
                     new Claim(ClaimTypes.Role, Rule)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),

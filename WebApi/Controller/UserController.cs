@@ -42,8 +42,8 @@ namespace WebApi.Controller
 
                     if (verified == true)
                     {
-                        var token = _tokenService.GenerateJwtToken(userDatabase.Name, userDatabase.Id, userDatabase.Role);
-                        return Ok(new {message="Acesso Liberado", token });
+                        var token = _tokenService.GenerateJwtToken(userDatabase.Name, userDatabase.Id, userDatabase.Role, userDatabase.FirstName);
+                        return Ok(new LoginDTO(token));
                     }
                     return BadRequest("Credenciais incorretas ou usuário não existe");
                 }
