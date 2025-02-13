@@ -41,6 +41,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 
@@ -55,6 +57,15 @@ app.UseHttpsRedirection();
 
 
 app.UseRouting();
+
+app.UseCors( x =>
+    {
+        x.AllowAnyHeader();
+        x.AllowAnyMethod();
+        x.AllowAnyOrigin();
+    });
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 
